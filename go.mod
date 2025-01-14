@@ -4,6 +4,7 @@ go 1.21.1
 
 require (
 	github.com/gofrs/uuid v4.4.0+incompatible
+	github.com/rabbitmq/amqp091-go v1.10.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/gorm v1.25.12

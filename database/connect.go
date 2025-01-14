@@ -4,7 +4,7 @@ import (
 	"log"
 
 	
-	"github.com/3b3al/Charity-System/Config"
+	"github.com/3b3al/Charity-System/setting"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 )
