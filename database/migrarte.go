@@ -1,6 +1,8 @@
 package database
 
 import (
+	"log"
+
 	"github.com/3b3al/Charity-System/core/profiling"
 	"gorm.io/gorm"
 )
@@ -19,6 +21,7 @@ func Migrate(db *gorm.DB) error {
 		if err != nil {
 			return err
 		}
+		log.Printf("migrate %T", model)
 	}
 	return nil
 }
