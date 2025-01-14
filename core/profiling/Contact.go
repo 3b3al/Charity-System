@@ -1,11 +1,9 @@
 package profiling
 
-import (
-	"database/sql"
-	"time"
-)
+import "github.com/gofrs/uuid"
 
 type RelatedType string
+
 const (
 	PatientType  RelatedType = "patient"
 	GuardianType RelatedType = "guardian"
@@ -13,6 +11,7 @@ const (
 )
 
 type ContactType string
+
 const (
 	PrimaryContact   ContactType = "primary"
 	SecondaryContact ContactType = "secondary"
@@ -20,16 +19,13 @@ const (
 )
 
 type Contact struct {
-	ID                   string       `gorm:"column:id;primaryKey"`
-	RelatedID            string       `gorm:"column:related_id" `
-	RelatedType          RelatedType  `gorm:"column:related_type" `
-	PhoneNumer           string       `gorm:"column:phone_number" `
-	AlternatePhoneNumber string       `gorm:"column:alternate_phone_number"`
-	Email                string       `gorm:"column:email"`
-	ContactType          ContactType  `gorm:"column:contact_type"`
-	CreatedAt            time.Time    `gorm:"column:created_at"`
-	UpdateAt             sql.NullTime `gorm:"column:updated_at"`
-	DeleteAt             sql.NullTime `gorm:"column:deleted_at"`
+	BaseModel
+	RelatedID            uuid.UUID   `gorm:"type:uuid;column:related_id"`
+	RelatedType          RelatedType `gorm:"type:varchar(100);column:related_type"`
+	PhoneNumber          string      `gorm:"type:varchar(250);column:phone_number"`
+	AlternatePhoneNumber string      `gorm:"type:varchar(250);column:alternate_phone_number"`
+	Email                string      `gorm:"type:varchar(250);column:email"`
+	ContactType          ContactType `gorm:"type:varchar(100);column:contact_type"`
 }
 
 type IContactRepo interface {

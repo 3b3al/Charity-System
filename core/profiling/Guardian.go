@@ -1,8 +1,9 @@
 package profiling
 
 import (
-	"database/sql"
 	"time"
+
+	"github.com/gofrs/uuid"
 )
 
 type Relationship string
@@ -16,17 +17,15 @@ const (
 )
 
 type Guardian struct {
-	ID           string       `gorm:"column:id;primaryKey"`
-	FirstName    string       `gorm:"column:first_name"`
-	LastName     string       `gorm:"column:last_name"`
+	BaseModel
+	FirstName    string       `gorm:"type:varchar(100);column:first_name"`
+	LastName     string       `gorm:"type:varchar(100);column:last_name"`
 	BirthDate    time.Time    `gorm:"column:birth_date"`
-	Patient      Patient      `gorm:"column:patient_id"`
-	Relationship Relationship `gorm:"column:relationship"`
-	Address      Address      `gorm:"column:foreignKey:address_id"`
-	Contacts     []Contact    `gorm:"foreignKey:related_id"`
-	CreatedAt    time.Time    `gorm:"column:created_at"`
-	UpdateAt     sql.NullTime `gorm:"column:updated_at"`
-	DeleteAt     sql.NullTime `gorm:"column:deleted_at"`
+	PatientID    uuid.UUID    `gorm:"type:uuid;column:patient_id"`
+	Relationship Relationship `gorm:"type:varchar(100);column:relationship"`
+	AddressID    uuid.UUID    `gorm:"type:uuid;column:address_id"`
+	Address      Address      `gorm:"foreignKey:AddressID"`
+	Contacts     []Contact    `gorm:"foreignKey:RelatedID;references:ID"`
 }
 
 type IGuardianRepo interface {
