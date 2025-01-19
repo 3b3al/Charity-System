@@ -14,7 +14,7 @@ type Address struct {
 }
 
 type IAddressRepo interface {
-	CreateAddress(address *Address) error
+	CreateAddress(address *Address) (*Address, error)
 	GetAddressByID(id string) (*Address, error)
 	UpdateAddress(address *Address) error
 	DeleteAddress(id string) error

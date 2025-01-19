@@ -29,6 +29,5 @@ type Contact struct {
 }
 
 type IContactRepo interface {
-	CreateContact(contact *Contact) error
-	GetContactByID(id string) (*Contact, error)
+	CreateContact(contact *Contact) (*Contact, error)
 }
