@@ -13,11 +13,20 @@ func NewContactRepo(db *gorm.DB) profiling.IContactRepo {
 	return &ContactRepo{db: db}
 }
 
-func (c ContactRepo) CreateContact(contact *profiling.Contact) (*profiling.Contact, error) {
-	err := c.db.Create(contact).Error
+func (contactRepo *ContactRepo) GetContactByID(id string) (*profiling.Contact, error) {
+	var contact profiling.Contact
+	err := contactRepo.db.Where("id = ?", id).First(&contact).Error
 	if err != nil {
 		return nil, err
 	}
+	return &contact, nil
+}
 
-	return contact, nil
+func (contactRepo *ContactRepo) CreateOrUpdateContact(contact *profiling.Contact) (*profiling.Contact, error) {
+	err := contactRepo.db.Save(contact).Error
+	return contact, err
+}
+
+func (contactRepo *ContactRepo) DeleteContact(id string) error {
+	return contactRepo.db.Where("id = ?", id).Delete(&profiling.Contact{}).Error
 }

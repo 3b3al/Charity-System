@@ -11,8 +11,7 @@ type Doctor struct {
 }
 
 type IDoctorRepo interface {
-	CreateDoctor(doctor *Doctor) error
 	GetDoctor(id uuid.UUID) (*Doctor, error)
-	UpdateDoctor(doctor *Doctor) error
+	CreateOrUpdateDoctor(doctor *Doctor) (*Doctor, error)
 	DeleteDoctor(id uuid.UUID) error
 }

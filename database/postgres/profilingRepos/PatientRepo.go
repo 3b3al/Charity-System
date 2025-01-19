@@ -13,14 +13,20 @@ func NewPatientRepo(db *gorm.DB) profiling.IPatientRepo {
 	return &PatientRepo{db: db}
 }
 
-func (r *PatientRepo) CreatePatient(patient *profiling.Patient) (*profiling.Patient, error) {
-	err := r.db.Create(patient).Error
+func (patientRepo PatientRepo) GetPatientByID(id string) (*profiling.Patient, error) {
+	var patient profiling.Patient
+	err := patientRepo.db.Where("id = ?", id).First(&patient).Error
 	if err != nil {
 		return nil, err
 	}
+	return &patient, nil
+}
+
+func (patientRepo PatientRepo) CreateOrUpdatePatient(patient *profiling.Patient) (*profiling.Patient, error) {
+	err := patientRepo.db.Save(patient).Error
 	return patient, err
 }
 
-func (r *PatientRepo) DeletePatientByID(id string) error {
-	return r.db.Delete(&profiling.Patient{}, id).Error
+func (patientRepo PatientRepo) DeletePatientByID(id string) error {
+	return patientRepo.db.Where("id = ?", id).Delete(&profiling.Patient{}).Error
 }

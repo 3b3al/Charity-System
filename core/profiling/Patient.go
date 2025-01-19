@@ -21,6 +21,7 @@ type Patient struct {
 }
 
 type IPatientRepo interface {
-	CreatePatient(patient *Patient) (*Patient, error)
+	GetPatientByID(id string) (*Patient, error)
 	DeletePatientByID(id string) error
+	CreateOrUpdatePatient(patient *Patient) (*Patient, error)
 }

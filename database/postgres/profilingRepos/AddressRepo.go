@@ -13,10 +13,19 @@ func NewAddressRepo(db *gorm.DB) profiling.IAddressRepo {
 	return &AddressRepo{db: db}
 }
 
-func (a *AddressRepo) CreateAddress(address *profiling.Address) (*profiling.Address, error) {
-	err := a.db.Create(address).Error
+func (addressRepo *AddressRepo) GetAddressByID(id string) (*profiling.Address, error) {
+	var address profiling.Address
+	err := addressRepo.db.Where("id = ?", id).First(&address).Error
 	if err != nil {
 		return nil, err
 	}
-	return address, err
+	return &address, nil
+}
+
+func (addressRepo *AddressRepo) CreateOrUpdateAddress(address *profiling.Address) error {
+	return addressRepo.db.Save(&address).Error
+}
+
+func (addressRepo *AddressRepo) DeleteAddress(id string) error {
+	return addressRepo.db.Where("id = ?", id).Delete(&profiling.Address{}).Error
 }

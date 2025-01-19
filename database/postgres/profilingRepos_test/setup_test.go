@@ -24,7 +24,7 @@ func SetupTestDB() (*gorm.DB, error) {
 
 func GetBaseModelObj() profiling.BaseModel {
 	return profiling.BaseModel{
-		ID:       uuid.,
+		ID:        uuid.Must(uuid.NewV4()),
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),
 	}

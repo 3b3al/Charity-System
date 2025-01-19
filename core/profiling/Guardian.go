@@ -29,8 +29,7 @@ type Guardian struct {
 }
 
 type IGuardianRepo interface {
-	CreateGuardian(guardian *Guardian) error
 	GetGuardianByID(id string) (*Guardian, error)
-	UpdateGuardian(guardian *Guardian) error
+	CreateOrUpdateGuardian(guardian *Guardian) (*Guardian, error)
 	DeleteGuardian(id string) error
 }
